@@ -1,0 +1,468 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Đoành Thanh Hoàng</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ffe0ec, #e6dcff, #d8f4ff);
+    color: #733d68;
+    overflow-x: hidden;
+}
+
+.page {
+    display: none;
+    min-height: 100vh;
+    width: 100%;
+    padding: 25px 18px;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.page.active {
+    display: flex;
+    animation: appear 0.7s ease;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    font-size: clamp(28px, 8vw, 43px);
+    margin-bottom: 20px;
+    color: #e64c91;
+    text-shadow: 2px 3px 8px #ffffff;
+}
+
+h2 {
+    font-size: 26px;
+    margin-bottom: 18px;
+    color: #a04491;
+}
+
+p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+button {
+    border: none;
+    padding: 13px 23px;
+    margin: 8px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #ff70a6, #b879ff);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 5px 15px #d99bc9;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.card {
+    width: 100%;
+    max-width: 390px;
+    padding: 25px 20px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 25px;
+    box-shadow: 0 10px 30px #cfa8d9;
+}
+
+.big-emoji {
+    font-size: 85px;
+    margin: 15px;
+    animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+.gift {
+    font-size: 110px;
+    cursor: pointer;
+    animation: bounce 1.5s infinite;
+}
+
+.cake {
+    font-size: 100px;
+    cursor: pointer;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.photo-grid img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 18px;
+    border: 4px solid white;
+    box-shadow: 0 5px 15px #d5a4cf;
+}
+
+.letter {
+    background: #fffaf0;
+    color: #75445d;
+    padding: 25px 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 390px;
+    box-shadow: 0 8px 25px #c9a1c7;
+    line-height: 1.9;
+    text-align: left;
+    border: 2px solid #f4c8dd;
+}
+
+textarea {
+    width: 100%;
+    min-height: 130px;
+    border: 2px solid #f2a9d0;
+    border-radius: 15px;
+    padding: 14px;
+    font-size: 16px;
+    resize: vertical;
+    outline: none;
+    font-family: inherit;
+    margin: 15px 0;
+}
+
+textarea:focus {
+    border-color: #c56bda;
+}
+
+.flying-letter {
+    position: fixed;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 65px;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.fly {
+    animation: flyAway 2.5s ease-in forwards;
+}
+
+@keyframes flyAway {
+    0% {
+        bottom: 10%;
+        transform: translateX(-50%) rotate(0);
+        opacity: 1;
+    }
+    100% {
+        bottom: 110%;
+        transform: translateX(100px) rotate(25deg);
+        opacity: 0;
+    }
+}
+
+.star {
+    position: fixed;
+    pointer-events: none;
+    animation: sparkle 2s linear forwards;
+    z-index: 99;
+}
+
+@keyframes sparkle {
+    0% { opacity: 1; transform: scale(0.5) rotate(0); }
+    100% { opacity: 0; transform: scale(1.5) rotate(180deg) translateY(-100px); }
+}
+
+.decor {
+    position: absolute;
+    font-size: 24px;
+    opacity: 0.7;
+    animation: float 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(-8deg); }
+    50% { transform: translateY(-20px) rotate(8deg); }
+}
+
+.small {
+    font-size: 14px;
+    color: #986e91;
+}
+
+#musicButton {
+    position: fixed;
+    top: 10px;
+    right: 8px;
+    z-index: 200;
+    padding: 9px 13px;
+    font-size: 13px;
+    margin: 0;
+}
+
+@media (max-height: 650px) {
+    .page {
+        padding-top: 45px;
+        padding-bottom: 20px;
+    }
+
+    .big-emoji { font-size: 65px; }
+    .gift { font-size: 80px; }
+    .photo-grid img { height: 130px; }
+}
+</style>
+</head>
+
+<body>
+
+<button id="musicButton" onclick="toggleMusic()">🎵 Nhạc</button>
+
+<!-- TRANG 1 -->
+<section class="page active" id="page1">
+    <div class="decor" style="top:10%;left:10%">🎈</div>
+    <div class="decor" style="top:20%;right:10%">✨</div>
+    <div class="decor" style="bottom:15%;left:12%">🌷</div>
+
+    <div class="big-emoji">🎂</div>
+    <h1>Happy Birthday!</h1>
+    <div class="card">
+        <p>🎉 Hôm nay là một ngày thật đặc biệt! 🎉</p>
+        <h2>Đoành Thanh Hoàng</h2>
+        <p>Một món quà nhỏ dành riêng cho bạn 💗</p>
+        <p>Hãy cùng mở ra những điều bất ngờ nhé!</p>
+    </div>
+
+    <div class="gift" onclick="openGift()">🎁</div>
+    <p class="small">Chạm vào hộp quà để bắt đầu</p>
+    <button onclick="go(2)">Bắt đầu khám phá 💌</button>
+</section>
+
+<!-- TRANG 2 -->
+<section class="page" id="page2">
+    <div class="card">
+        <div class="big-emoji">🌸</div>
+        <h1>Dear Hoàng!</h1>
+        <p>Chúc mừng sinh nhật Đoành Thanh Hoàng!</p>
+        <p>Chúc bạn có một ngày sinh nhật thật vui vẻ, tràn ngập tiếng cười và nhận được thật nhiều tình yêu thương.</p>
+        <p>Mong rằng tuổi mới sẽ mang đến cho bạn nhiều niềm vui, may mắn và những điều tốt đẹp nhất. 💖</p>
+        <p>Hãy luôn tự tin, vui vẻ và theo đuổi những điều bạn yêu thích nhé!</p>
+    </div>
+    <button onclick="go(1)">⬅ Quay lại</button>
+    <button onclick="go(3)">Tiếp theo ➜</button>
+</section>
+
+<!-- TRANG 3 -->
+<section class="page" id="page3">
+    <h1>🎂 Birthday Cake 🎂</h1>
+    <div class="card">
+        <p>Chiếc bánh sinh nhật dành riêng cho Hoàng đây!</p>
+        <div class="cake" id="cake" onclick="blowCandles()">🎂</div>
+        <p id="candleText">Hãy chạm vào bánh để thổi nến và ước một điều nhé! ✨</p>
+        <button onclick="blowCandles()">🌬️ Thổi nến</button>
+    </div>
+    <button onclick="go(2)">⬅ Quay lại</button>
+    <button onclick="go(4)">Đọc thư 💌</button>
+</section>
+
+<!-- TRANG 4 -->
+<section class="page" id="page4">
+    <h1>💌 Một lá thư nhỏ</h1>
+    <div class="letter">
+        <p>Gửi Đoành Thanh Hoàng,</p>
+        <p>Nhân ngày sinh nhật của bạn, chúc bạn luôn mạnh khỏe, hạnh phúc và gặp nhiều may mắn.</p>
+        <p>Mong những dự định của bạn đều dần trở thành hiện thực. Dù có lúc vui hay buồn, hy vọng bạn vẫn luôn giữ được sự lạc quan và nụ cười của mình.</p>
+        <p>Chúc tuổi mới có thật nhiều kỷ niệm đáng nhớ, những người bạn tốt và những bất ngờ thật dễ thương!</p>
+        <p>🎉 Sinh nhật vui vẻ nhé! 🎉</p>
+        <p style="text-align:right">Thân gửi 💗</p>
+    </div>
+    <button onclick="go(3)">⬅ Quay lại</button>
+    <button onclick="go(5)">Xem album ảnh 📸</button>
+</section>
+
+<!-- TRANG 5 -->
+<section class="page" id="page5">
+    <h1>📸 Góc kỷ niệm</h1>
+    <p>Một vài hình ảnh dễ thương dành tặng Hoàng 💕</p>
+
+    <div class="photo-grid">
+        <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=500" alt="Bóng bay sinh nhật">
+        <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=500" alt="Bánh sinh nhật">
+        <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=500" alt="Tiệc sinh nhật">
+        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500" alt="Buổi tiệc vui vẻ">
+    </div>
+
+    <p class="small">Mong bạn sẽ có thêm thật nhiều kỷ niệm đẹp! 🌈</p>
+    <button onclick="go(4)">⬅ Quay lại</button>
+    <button onclick="go(6)">Gửi lời chúc 💌</button>
+</section>
+
+<!-- TRANG 6 -->
+<section class="page" id="page6">
+    <div class="card">
+        <div class="big-emoji">💌</div>
+        <h1>Gửi lời chúc</h1>
+        <p>Hãy viết một lời chúc dành cho Hoàng. Khi nhấn gửi, lá thư sẽ bay lên bầu trời! ✨</p>
+
+        <textarea id="wishInput" placeholder="Viết lời chúc của bạn ở đây..."></textarea>
+
+        <button onclick="sendWish()">💌 Gửi lời chúc</button>
+        <p id="wishStatus" class="small"></p>
+    </div>
+
+    <button onclick="go(5)">⬅ Quay lại</button>
+    <button onclick="go(7)">Kết thúc 🎉</button>
+</section>
+
+<!-- TRANG 7 -->
+<section class="page" id="page7">
+    <div class="big-emoji">🎉🎂🎉</div>
+    <h1>Happy Birthday, Hoàng!</h1>
+    <div class="card">
+        <p>Chúc bạn tuổi mới thật rực rỡ!</p>
+        <p>🌷 Luôn vui vẻ</p>
+        <p>💖 Luôn hạnh phúc</p>
+        <p>⭐ Luôn gặp may mắn</p>
+        <p>🎁 Mọi điều tốt đẹp sẽ đến với bạn!</p>
+        <p>Cảm ơn bạn đã khám phá món quà nhỏ này. 💕</p>
+    </div>
+    <button onclick="celebrate()">🎊 Ăn mừng nào!</button>
+    <button onclick="go(1)">↻ Xem lại từ đầu</button>
+</section>
+
+<script>
+function go(number) {
+    document.querySelectorAll(".page").forEach(function(page) {
+        page.classList.remove("active");
+    });
+
+    document.getElementById("page" + number).classList.add("active");
+    window.scrollTo(0, 0);
+}
+
+function openGift() {
+    const gift = document.querySelector(".gift");
+    gift.textContent = "🎊";
+    gift.style.transform = "scale(1.3)";
+    sparkles(20);
+}
+
+let candlesBlown = false;
+
+function blowCandles() {
+    const cake = document.getElementById("cake");
+    const text = document.getElementById("candleText");
+
+    if (!candlesBlown) {
+        cake.textContent = "🍰";
+        text.textContent = "Ước nguyện đã được gửi đến vũ trụ! ✨💖";
+        candlesBlown = true;
+        sparkles(30);
+    } else {
+        cake.textContent = "🎂";
+        text.textContent = "Chúc Hoàng luôn vui vẻ và hạnh phúc! 🎉";
+        candlesBlown = false;
+    }
+}
+
+function sendWish() {
+    const input = document.getElementById("wishInput");
+    const status = document.getElementById("wishStatus");
+    const wish = input.value.trim();
+
+    if (wish === "") {
+        status.textContent = "Bạn hãy viết lời chúc trước nhé! 💗";
+        input.focus();
+        return;
+    }
+
+    const letter = document.createElement("div");
+    letter.className = "flying-letter";
+    letter.textContent = "💌";
+    document.body.appendChild(letter);
+
+    letter.classList.add("fly");
+    sparkles(25);
+
+    status.textContent = "Lời chúc của bạn đã được gửi đi! 💖";
+    input.value = "";
+
+    setTimeout(function() {
+        letter.remove();
+    }, 2600);
+}
+
+function celebrate() {
+    sparkles(60);
+    const page = document.getElementById("page7");
+    page.style.background =
+        "linear-gradient(135deg, #ffd6e7, #e4d5ff, #d4f5ff)";
+
+    setTimeout(function() {
+        page.style.background = "";
+    }, 1500);
+}
+
+function sparkles(amount) {
+    const symbols = ["✨", "💖", "⭐", "🌸", "🎉", "💕"];
+
+    for (let i = 0; i < amount; i++) {
+        const star = document.createElement("div");
+        star.className = "star";
+        star.textContent =
+            symbols[Math.floor(Math.random() * symbols.length)];
+
+        star.style.left = Math.random() * 100 + "vw";
+        star.style.top = Math.random() * 100 + "vh";
+        star.style.fontSize = (15 + Math.random() * 25) + "px";
+
+        document.body.appendChild(star);
+
+        setTimeout(function() {
+            star.remove();
+        }, 2100);
+    }
+}
+
+let musicPlaying = false;
+
+function toggleMusic() {
+    const button = document.getElementById("musicButton");
+
+    if (!musicPlaying) {
+        button.textContent = "🎵 Chưa có nhạc";
+        musicPlaying = true;
+        alert("Bạn có thể thêm một file nhạc MP3 yêu thích để phát nhạc nền nhé!");
+    } else {
+        button.textContent = "🎵 Nhạc";
+        musicPlaying = false;
+    }
+}
+</script>
+</body>
+</html>
+
+  
